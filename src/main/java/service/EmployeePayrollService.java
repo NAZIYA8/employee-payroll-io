@@ -17,6 +17,10 @@ import java.util.Scanner;
 import model.EmployeePayrollData;
 
 public class EmployeePayrollService {
+	public enum IOService {
+		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+	}
+
 	private List<EmployeePayrollData> employeePayrollList;
 
 	public EmployeePayrollService() {
@@ -36,13 +40,11 @@ public class EmployeePayrollService {
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
 		Scanner consoleInputReader = new Scanner(System.in);
 		employeePayrollService.readEmployeePayrollData(consoleInputReader);
-		employeePayrollService.writeEmployeePayrollData();
+		employeePayrollService.writeEmployeePayrollData(IOService.FILE_IO);
 	}
 
 	/**
-	 * This method is used to read the Employee payroll data.
-	 * 
-	 * @param consoleInputReader reads input from console
+	 * This method is used to read the employee payroll data.
 	 */
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.println("Enter Employee id");
@@ -55,9 +57,21 @@ public class EmployeePayrollService {
 	}
 
 	/**
-	 * This method is used to write the employee payroll data to console
+	 * This method is used to write the employee payroll data.
 	 */
-	private void writeEmployeePayrollData() {
-		System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
+	public void writeEmployeePayrollData(IOService ioService) {
+		if (ioService.equals(IOService.CONSOLE_IO))
+			System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
+		else if (ioService.equals(IOService.FILE_IO))
+			new EmployeePayrollFileIOService().writeData(employeePayrollList);
+	}
+
+	/**
+	 * This method is used to count the entries.
+	 */
+	public long countEntries(EmployeePayrollService.IOService ioService) {
+		if (ioService.equals(EmployeePayrollService.IOService.FILE_IO))
+			return new EmployeePayrollFileIOService().countEntries();
+		return 0;
 	}
 }
