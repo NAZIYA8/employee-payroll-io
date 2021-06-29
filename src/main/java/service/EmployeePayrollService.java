@@ -1,7 +1,7 @@
 /**
  * ****************************************************************************
- * Purpose: This class is implemented to read and write the employee payroll data 
- * 			to a file.
+ * Purpose: This class is implemented to read and write the employee payroll 
+ * 			data to a file.
  *
  * @author Syeda Naziya
  * @version 1.0
