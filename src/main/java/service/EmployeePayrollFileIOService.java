@@ -23,7 +23,9 @@ public class EmployeePayrollFileIOService {
 	public static String PAYROLL_FILE_NAME = "payroll-file.txt";
 
 	/**
-	 * This method is used to write data
+	 * This method is used to write data.
+	 * 
+	 * @param employeePayrollList
 	 */
 	public void writeData(List<EmployeePayrollData> employeePayrollList) {
 		StringBuffer empBuffer = new StringBuffer();
@@ -39,7 +41,18 @@ public class EmployeePayrollFileIOService {
 	}
 
 	/**
-	 * This method is used to count the entries to ensure the operation worked
+	 * This method is used to print the data
+	 */
+	public void printData() {
+		try {
+			Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method is used to count the number of entries
 	 * 
 	 * @return entries
 	 */

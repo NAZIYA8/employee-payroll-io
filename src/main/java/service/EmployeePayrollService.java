@@ -67,6 +67,17 @@ public class EmployeePayrollService {
 	}
 
 	/**
+	 * This method is used to print the data
+	 * 
+	 * @param ioService
+	 */
+	public void printData(IOService ioService) {
+		if (ioService.equals(IOService.FILE_IO))
+			new EmployeePayrollFileIOService().printData();
+
+	}
+
+	/**
 	 * This method is used to count the entries.
 	 */
 	public long countEntries(EmployeePayrollService.IOService ioService) {
