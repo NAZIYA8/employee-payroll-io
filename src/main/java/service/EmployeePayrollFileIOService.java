@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import model.EmployeePayrollData;
 
@@ -65,4 +66,18 @@ public class EmployeePayrollFileIOService {
 		}
 		return entries;
 	}
+	
+	/**
+	 * This method is used to read data
+	 * @return employee payroll list
+	 */
+	 public List<EmployeePayrollData> readData() {
+	        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+	        try {
+	            Files.lines(new File("payroll-file.txt").toPath()).map(line -> line.trim())
+	                    .forEach(line -> System.out.println(line));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } return employeePayrollList;
+	    }
 }

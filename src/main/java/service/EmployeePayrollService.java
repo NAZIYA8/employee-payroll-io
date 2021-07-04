@@ -17,6 +17,8 @@ import java.util.Scanner;
 import model.EmployeePayrollData;
 
 public class EmployeePayrollService {
+	private IOService ioService;
+
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
 	}
@@ -31,7 +33,7 @@ public class EmployeePayrollService {
 	}
 
 	/**
-	 * This is the main method of the program.
+	 * This is the main method.
 	 * 
 	 * @param args
 	 */
@@ -44,7 +46,9 @@ public class EmployeePayrollService {
 	}
 
 	/**
-	 * This method is used to read the employee payroll data.
+	 * This method is used to read employee payroll data.
+	 * 
+	 * @param consoleInputReader
 	 */
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.println("Enter Employee id");
@@ -57,13 +61,27 @@ public class EmployeePayrollService {
 	}
 
 	/**
-	 * This method is used to write the employee payroll data.
+	 * This method is used to write employee payroll data.
+	 * 
+	 * @param ioService
 	 */
 	public void writeEmployeePayrollData(IOService ioService) {
 		if (ioService.equals(IOService.CONSOLE_IO))
 			System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
 		else if (ioService.equals(IOService.FILE_IO))
 			new EmployeePayrollFileIOService().writeData(employeePayrollList);
+	}
+
+	/**
+	 * This method is used to read employee payroll data.
+	 * 
+	 * @param ioService
+	 */
+	long readEmployeePayrollData(IOService ioService) {
+		this.ioService = ioService;
+		if (ioService.equals(EmployeePayrollService.IOService.FILE_IO))
+			this.employeePayrollList = new EmployeePayrollFileIOService().readData();
+		return employeePayrollList.size();
 	}
 
 	/**
@@ -74,15 +92,17 @@ public class EmployeePayrollService {
 	public void printData(IOService ioService) {
 		if (ioService.equals(IOService.FILE_IO))
 			new EmployeePayrollFileIOService().printData();
-
 	}
 
 	/**
 	 * This method is used to count the entries.
+	 * 
+	 * @param ioService
 	 */
 	public long countEntries(EmployeePayrollService.IOService ioService) {
 		if (ioService.equals(EmployeePayrollService.IOService.FILE_IO))
 			return new EmployeePayrollFileIOService().countEntries();
 		return 0;
 	}
+
 }
